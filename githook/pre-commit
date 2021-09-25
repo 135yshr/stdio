@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if [ ! -e Makefile ]; then
+    exit 0
+fi
+
+make lint
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
+make vet
+if [ $? -ne 0 ]; then
+    exit 1
+fi
+
+exit 0
