@@ -37,6 +37,10 @@ func TestStdio_Ask(t *testing.T) {
 			args: args{question: "What is your name:", opt: &Options{Required: true}, input: "\nMy name"},
 			want: want{out: "What is your name:\nWhat is your name:", value: "My name"},
 		},
+		"Should return `Default value`": {
+			args: args{question: "", opt: &Options{DefaultValue: "Default value"}, input: "\n"},
+			want: want{out: "", value: "Default value"},
+		},
 	}
 	for tcName, tt := range tests {
 		t.Run(tcName, func(t *testing.T) {

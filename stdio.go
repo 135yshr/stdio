@@ -15,6 +15,7 @@ type Stdio struct {
 // Options is option for input api
 type Options struct {
 	Required bool
+	DefaultValue string
 }
 
 // Ask asks the user for input using the specified query.
@@ -27,6 +28,9 @@ func (s *Stdio) Ask(question string, opt *Options) (string, error) {
 		}
 		scanner.Scan()
 		in := scanner.Text()
+		if in == "" {
+			in = opt.DefaultValue
+		}
 		if !opt.Required {
 			return in, nil
 		}
