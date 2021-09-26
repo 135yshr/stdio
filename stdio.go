@@ -18,12 +18,19 @@ type Options struct {
 	DefaultValue string
 }
 
+func (o *Options) AskTextByDefaultValue() string {
+	if o.DefaultValue == "" {
+		return ""
+	}
+	return fmt.Sprintf(" [%s]", o.DefaultValue)
+}
+
 // Ask asks the user for input using the specified query.
 // The response is returned as a string.
 func (s *Stdio) Ask(question string, opt *Options) (string, error) {
 	scanner := bufio.NewScanner(s.Reader)
 	for {
-		if _, err := fmt.Fprint(s.Writer, question); err != nil {
+		if _, err := fmt.Fprintf(s.Writer, "%s%s: ", question, opt.AskTextByDefaultValue()); err != nil {
 			return "", err
 		}
 		scanner.Scan()

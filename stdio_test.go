@@ -22,24 +22,24 @@ func TestStdio_Ask(t *testing.T) {
 		wantErr bool
 	}{
 		"Should displayed `What is your name`": {
-			args: args{question: "What is your name:", opt: &Options{}, input: "\n"},
-			want: want{out: "What is your name:", value: ""},
+			args: args{question: "What is your name", opt: &Options{}, input: "\n"},
+			want: want{out: "What is your name: ", value: ""},
 		},
 		"Should return `Your name`": {
 			args: args{question: "", opt: &Options{}, input: "Your name\n"},
-			want: want{out: "", value: "Your name"},
+			want: want{out: ": ", value: "Your name"},
 		},
 		"Should return `My name`": {
 			args: args{question: "", opt: &Options{Required: true}, input: "\nMy name"},
-			want: want{out: "\n", value: "My name"},
+			want: want{out: ": \n: ", value: "My name"},
 		},
 		"Should displayed `What is your name:_nWhat is your name:`": {
-			args: args{question: "What is your name:", opt: &Options{Required: true}, input: "\nMy name"},
-			want: want{out: "What is your name:\nWhat is your name:", value: "My name"},
+			args: args{question: "What is your name", opt: &Options{Required: true}, input: "\nMy name"},
+			want: want{out: "What is your name: \nWhat is your name: ", value: "My name"},
 		},
 		"Should return `Default value`": {
 			args: args{question: "", opt: &Options{DefaultValue: "Default value"}, input: "\n"},
-			want: want{out: "", value: "Default value"},
+			want: want{out: " [Default value]: ", value: "Default value"},
 		},
 	}
 	for tcName, tt := range tests {
